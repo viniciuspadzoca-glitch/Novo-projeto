@@ -1,0 +1,233 @@
+/*
+  TEMPLATE STYLES: These styles are used as a base template.
+  AI is allowed to modify these styles as needed.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-x: clip;
+  background-color: #F1F5F9;
+  color: #0F2232;
+}
+
+.font-display {
+  font-family: "Barlow Condensed", "Inter", sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.font-num {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ---- Impressão A4: 2 vias horizontais ---- */
+@media screen {
+  .area-impressao { display: none; }
+}
+
+@media print {
+  @page { size: A4 landscape; margin: 5mm; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { background: #fff !important; margin: 0; padding: 0; height: auto !important; overflow: visible !important; }
+  body > *:not(.area-impressao) { display: none !important; }
+  .nao-imprimir { display: none !important; }
+  .area-impressao {
+    display: block !important;
+    position: static !important;
+    width: 100%;
+    background: #fff;
+    color: #000;
+    font-size: 9pt;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+
+/*
+  ---break---
+*/
+
+@layer base {
+  :root {
+    /* PCE-US light palette
+       Azul Marinho Tático #0F2232 · Amarelo Vivo #FFB800 · Dourado #D4A237
+       Vermelho #D9381E · Cinza Claro #F1F5F9 · Branco #FFFFFF */
+    --background: 210 40% 96%;
+    --foreground: 207 54% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 207 54% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 207 54% 13%;
+    --primary: 43 100% 50%;
+    --primary-foreground: 207 54% 13%;
+    --secondary: 210 40% 90%;
+    --secondary-foreground: 207 54% 13%;
+    --muted: 210 40% 93%;
+    --muted-foreground: 215 16% 42%;
+    --accent: 42 70% 92%;
+    --accent-foreground: 207 54% 13%;
+    --destructive: 8 76% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 41 50% 75%;
+    --input: 41 50% 75%;
+    --ring: 41 65% 52%;
+    --radius: 0.75rem;
+    --sidebar-background: 207 54% 13%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 43 100% 50%;
+    --sidebar-primary-foreground: 207 54% 13%;
+    --sidebar-accent: 42 70% 92%;
+    --sidebar-accent-foreground: 207 54% 13%;
+    --sidebar-border: 41 50% 75%;
+    --sidebar-ring: 41 65% 52%;
+  }
+  .dark {
+    --background: 210 40% 96%;
+    --foreground: 207 54% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 207 54% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 207 54% 13%;
+    --primary: 43 100% 50%;
+    --primary-foreground: 207 54% 13%;
+    --secondary: 210 40% 90%;
+    --secondary-foreground: 207 54% 13%;
+    --muted: 210 40% 93%;
+    --muted-foreground: 215 16% 42%;
+    --accent: 42 70% 92%;
+    --accent-foreground: 207 54% 13%;
+    --destructive: 8 76% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 41 50% 75%;
+    --input: 41 50% 75%;
+    --ring: 41 65% 52%;
+    --sidebar-background: 207 54% 13%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 43 100% 50%;
+    --sidebar-primary-foreground: 207 54% 13%;
+    --sidebar-accent: 42 70% 92%;
+    --sidebar-accent-foreground: 207 54% 13%;
+    --sidebar-border: 41 50% 75%;
+    --sidebar-ring: 41 65% 52%;
+  }
+}
+
+/* ---- PCE-US visual accents ---- */
+/* Soft drop shadow on hover for yellow action buttons */
+[class*="from-[#FFB800]"]:hover,
+[class*="bg-[#FFB800]"]:hover {
+  box-shadow: 0 10px 24px -8px rgba(255, 184, 0, 0.55) !important;
+}
+/* Gold underline accent helper */
+.gold-underline {
+  border-bottom: 2px solid #D4A237;
+}
+
+/* ---- Padrão universal de modais: responsivo, sem transbordar ---- */
+/* Fundo / Overlay do Modal */
+.modal-overlay,
+.modal-backdrop {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+  z-index: 9999;
+}
+
+/* Caixa Container do Modal */
+.modal-container,
+.modal-content,
+.modal-dialog {
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: 90vh !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  border-radius: 12px;
+  overflow-y: auto !important;
+}
+
+/* Cabeçalho Fixo */
+.modal-header {
+  flex-shrink: 0;
+}
+
+/* Corpo com Rolagem Automática */
+.modal-body {
+  flex: 1 1 auto !important;
+  min-height: 0;
+  overflow-y: auto !important;
+  padding: 20px;
+}
+
+/* Rodapé Fixo (Botões de Ação) */
+.modal-footer {
+  flex-shrink: 0;
+}
+
+/* Em telas muito pequenas, reduz o padding lateral do overlay */
+@media (max-width: 480px) {
+  .modal-overlay,
+  .modal-backdrop {
+    padding: 12px;
+  }
+}
+
+/* ---- Modal de cadastro de itens: expansão total + alta densidade ---- */
+.modal-itens {
+  width: 95% !important;
+  max-width: 1300px !important;
+  max-height: 90vh !important;
+}
+
+/* Linhas de itens: compactas, sem corte de texto */
+.modal-itens .item-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 6px;
+  min-height: 28px;
+}
+.modal-itens .item-nome {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.15;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+.modal-itens .item-controles {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.modal-itens .btn-qtd {
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-itens .input-qtd {
+  width: 38px;
+  height: 26px;
+  text-align: center;
+  font-size: 13px;
+}
+.modal-itens .obs-area {
+  max-height: 45px;
+  resize: none;
+  overflow-y: auto;
+}
