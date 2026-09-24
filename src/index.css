@@ -221,8 +221,8 @@ body {
   justify-content: center;
 }
 .modal-itens .input-qtd {
-  width: auto;
-  min-width: 80px;
+  width: 40px;
+  min-width: 40px;
   height: 26px;
   text-align: center;
   font-size: 13px;
