@@ -392,7 +392,6 @@ export default defineConfig({
 			strict: true,
 			allow: [
 				path.resolve(__dirname),
-				path.join(path.resolve(__dirname, '../..'), 'node_modules'),
 			],
 		},
 	},

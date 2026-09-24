@@ -1,0 +1,4 @@
+## Pages
+- [Configurações — Sistema de registro de sacolas e sedex](/configuracoes): Área administrativa protegida por autenticação para configurar alas restritas, catálogo e prazos.
+- [Histórico de Registros — Sistema de registro de sacolas e sedex](/historico): Consulte, edite, reimprima e exporte em PDF o histórico completo de entregas de Sacola e SEDEX registradas na unidade.
+- [Sistema de registro de sacolas e sedex](/): Registre entregas de Sacola e SEDEX para pessoas privadas de liberdade com travas automáticas de 30 dias e 4 meses, offline-first.
