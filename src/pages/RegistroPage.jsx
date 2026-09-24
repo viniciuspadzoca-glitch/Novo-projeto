@@ -1444,6 +1444,14 @@ function ModalItens({
                                                                     if (e.key === 'Enter') {
                                                                         e.preventDefault();
                                                                         focarProximo(idx);
+                                                                    } else if (e.key === 'ArrowDown') {
+                                                                        e.preventDefault();
+                                                                        const next = inputsRef.current[idx + 1];
+                                                                        if (next) { next.focus(); next.select(); }
+                                                                    } else if (e.key === 'ArrowUp') {
+                                                                        e.preventDefault();
+                                                                        const prev = inputsRef.current[idx - 1];
+                                                                        if (prev) { prev.focus(); prev.select(); }
                                                                     }
                                                                 }}
                                                                 className={`input-qtd font-num rounded border bg-background outline-none focus:ring-2 focus:ring-primary/40 ${
