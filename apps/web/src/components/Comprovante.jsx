@@ -49,7 +49,7 @@ function nomeVisitanteSemRequerente(nome) {
 function TabelaCategoria({ titulo, itensFiltrados, corFundo }) {
     if (!itensFiltrados || itensFiltrados.length === 0) return null;
     return (
-        <table style={{ ...ts.tbl, marginBottom: '1.5mm', fontSize: '7.5pt' }}>
+        <table style={{ ...ts.tbl, marginBottom: '1mm', fontSize: '7.5pt' }}>
             <thead>
                 <tr>
                     <th
@@ -231,27 +231,30 @@ function Via({ titulo, registro, brasaoUrl }) {
                             </td>
                         </tr>
                         <tr>
-                            <td style={{ ...ts.th, padding: '2px 4px' }}>VISITANTE:</td>
+                            <td style={{ ...ts.th, padding: '4px 6px' }}>VISITANTE:</td>
                             <td
                                 colSpan={5}
                                 style={{
                                     ...ts.td,
                                     fontWeight: 700,
-                                    padding: '2px 4px',
+                                    padding: '4px 6px',
                                     whiteSpace: 'normal',
                                     wordBreak: 'break-word',
                                     overflowWrap: 'anywhere',
+                                    lineHeight: 1.25,
+                                    height: 'auto',
+                                    minHeight: '32px',
                                     fontSize: '7.5pt',
                                 }}
                             >
                                 {nomeVisitante || '—'}
                             </td>
-                            <td style={{ ...ts.th, padding: '2px 4px', whiteSpace: 'nowrap' }}>PARENTESCO:</td>
+                            <td style={{ ...ts.th, padding: '4px 6px', whiteSpace: 'nowrap' }}>PARENTESCO:</td>
                             <td
                                 style={{
                                     ...ts.td,
                                     fontWeight: 700,
-                                    padding: '2px 4px',
+                                    padding: '4px 6px',
                                     whiteSpace: 'nowrap',
                                     fontSize: '7.5pt',
                                 }}
@@ -263,7 +266,7 @@ function Via({ titulo, registro, brasaoUrl }) {
                 </table>
 
                 {/* ── Tabelas de itens ── */}
-                <div style={{ display: 'flex', gap: '1.5mm', alignItems: 'flex-start', marginBottom: '1mm', flex: 1 }}>
+                <div style={{ display: 'flex', gap: '1.5mm', alignItems: 'flex-start', marginBottom: '0.5mm', flex: 1 }}>
                     <div style={{ flex: 1 }}>
                         <TabelaCategoria titulo="ALIMENTAÇÃO" itensFiltrados={alimentacao} corFundo="#d5e8d4" />
                     </div>
@@ -323,16 +326,16 @@ function Via({ titulo, registro, brasaoUrl }) {
                 </div>
                 <div style={{ display: 'flex', gap: '6mm', marginBottom: '1mm' }}>
                     <div style={{ flex: 1 }}>
-                        <div style={{ height: '9mm' }} />
-                        <div style={{ borderTop: '1px solid #000', marginBottom: '1mm' }} />
+                        <div style={{ height: '7mm' }} />
+                        <div style={{ borderTop: '1px solid #000', marginBottom: '0.5mm' }} />
                         <div style={{ fontSize: '8pt', color: '#000', fontWeight: 600 }}>
                             Assinatura do Visitante / Entregador
                         </div>
                         <div style={{ fontSize: '7.5pt', color: '#444' }}>{nomeVisitante}</div>
                     </div>
                     <div style={{ flex: 1 }}>
-                        <div style={{ height: '9mm' }} />
-                        <div style={{ borderTop: '1px solid #000', marginBottom: '1mm' }} />
+                        <div style={{ height: '7mm' }} />
+                        <div style={{ borderTop: '1px solid #000', marginBottom: '0.5mm' }} />
                         <div style={{ fontSize: '8pt', color: '#000', fontWeight: 600 }}>
                             Assinatura do PPL (Interno)
                         </div>
