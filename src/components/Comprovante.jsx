@@ -199,20 +199,30 @@ function Via({ titulo, registro, brasaoUrl }) {
                 </table>
 
                 {/* ── Grade de dados ── */}
-                <table style={{ ...ts.tbl, marginBottom: '1mm', fontSize: '7.5pt' }}>
+                <table style={{ ...ts.tbl, tableLayout: 'fixed', marginBottom: '1mm', fontSize: '7.5pt' }}>
+                    <colgroup>
+                        <col style={{ width: '10%' }} />
+                        <col style={{ width: '14%' }} />
+                        <col style={{ width: '12%' }} />
+                        <col style={{ width: '9%' }} />
+                        <col style={{ width: '8%' }} />
+                        <col style={{ width: '12%' }} />
+                        <col style={{ width: '18%' }} />
+                        <col style={{ width: '17%' }} />
+                    </colgroup>
                     <tbody>
                         <tr>
-                            <td style={{ ...ts.th, width: '8%' }}>DATA:</td>
-                            <td style={{ ...ts.td, width: '14%' }}>{dataFormatada}</td>
-                            <td style={{ ...ts.th, width: '12%' }}>RECIBO Nº:</td>
-                            <td style={{ ...ts.td, width: '9%' }}>#{String(id || '').padStart(4, '0')}</td>
-                            <td style={{ ...ts.th, width: '8%' }}>CRED.:</td>
-                            <td style={{ ...ts.td, width: '12%' }}>{ppl?.credencial || '-'}</td>
-                            <td style={{ ...ts.th, width: '18%' }}>SITUAÇÃO CRED.:</td>
+                            <td style={{ ...ts.th }}>DATA:</td>
+                            <td style={{ ...ts.td }}>{dataFormatada}</td>
+                            <td style={{ ...ts.th }}>RECIBO Nº:</td>
+                            <td style={{ ...ts.td }}>#{String(id || '').padStart(4, '0')}</td>
+                            <td style={{ ...ts.th }}>CRED.:</td>
+                            <td style={{ ...ts.td }}>{ppl?.credencial || '-'}</td>
+                            <td style={{ ...ts.th }}>SITUAÇÃO CRED.:</td>
                             <td style={ts.td}>Normal</td>
                         </tr>
                         <tr>
-                            <td style={{ ...ts.th, width: '10%' }}>PRONT:</td>
+                            <td style={{ ...ts.th }}>PRONT:</td>
                             <td colSpan={5} style={{ ...ts.td, fontWeight: 700, fontSize: '8pt' }}>
                                 {ppl?.prontuario || '—'} — {ppl?.nome || '—'}
                             </td>
@@ -221,27 +231,27 @@ function Via({ titulo, registro, brasaoUrl }) {
                             </td>
                         </tr>
                         <tr>
-                            <td style={{ ...ts.th, width: '10%', padding: '0.3mm 0.8mm' }}>VISITANTE:</td>
+                            <td style={{ ...ts.th, padding: '2px 4px' }}>VISITANTE:</td>
                             <td
                                 colSpan={5}
                                 style={{
                                     ...ts.td,
                                     fontWeight: 700,
-                                    padding: '0.3mm 0.8mm',
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
+                                    padding: '2px 4px',
+                                    whiteSpace: 'normal',
+                                    wordBreak: 'break-word',
+                                    overflowWrap: 'anywhere',
                                     fontSize: '7.5pt',
                                 }}
                             >
                                 {nomeVisitante || '—'}
                             </td>
-                            <td style={{ ...ts.th, width: '12%', padding: '0.3mm 0.8mm', whiteSpace: 'nowrap' }}>PARENTESCO:</td>
+                            <td style={{ ...ts.th, padding: '2px 4px', whiteSpace: 'nowrap' }}>PARENTESCO:</td>
                             <td
                                 style={{
                                     ...ts.td,
                                     fontWeight: 700,
-                                    padding: '0.3mm 0.8mm',
+                                    padding: '2px 4px',
                                     whiteSpace: 'nowrap',
                                     fontSize: '7.5pt',
                                 }}
