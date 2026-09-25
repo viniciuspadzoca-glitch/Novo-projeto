@@ -221,10 +221,13 @@ body {
   justify-content: center;
 }
 .modal-itens .input-qtd {
-  width: 38px;
+  width: 60px;
+  min-width: 60px;
+  max-width: 120px;
   height: 26px;
   text-align: center;
   font-size: 13px;
+  transition: width 0.15s ease;
 }
 .modal-itens .obs-area {
   max-height: 45px;
