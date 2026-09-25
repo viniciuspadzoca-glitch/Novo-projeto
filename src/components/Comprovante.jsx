@@ -222,18 +222,25 @@ function Via({ titulo, registro, brasaoUrl }) {
                             <td style={ts.td}>Normal</td>
                         </tr>
                         <tr>
-                            <td style={{ ...ts.th }}>PRONT:</td>
-                            <td colSpan={5} style={{ ...ts.td, fontWeight: 700, fontSize: '8pt' }}>
-                                {ppl?.prontuario || '—'} — {ppl?.nome || '—'}
+                            <td
+                                colSpan={6}
+                                style={{
+                                    ...ts.td,
+                                    fontWeight: 700,
+                                    fontSize: '8pt',
+                                    padding: '0.5mm 0.8mm',
+                                }}
+                            >
+                                <strong style={{ whiteSpace: 'nowrap' }}>PRONT:</strong>
+                                &nbsp;{ppl?.prontuario || '—'} — {ppl?.nome || '—'}
                             </td>
                             <td colSpan={2} style={{ border: '2px solid #000', padding: '0.5mm 1mm', textAlign: 'center', background: '#000', color: '#fff', fontWeight: 700, fontSize: '10.5pt', printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact' }}>
                                 CUBÍCULO: {cubiculo || '—'}
                             </td>
                         </tr>
                         <tr>
-                            <td style={{ ...ts.th, padding: '4px 6px' }}>VISITANTE:</td>
                             <td
-                                colSpan={5}
+                                colSpan={6}
                                 style={{
                                     ...ts.td,
                                     fontWeight: 700,
@@ -244,10 +251,11 @@ function Via({ titulo, registro, brasaoUrl }) {
                                     lineHeight: 1.25,
                                     height: 'auto',
                                     minHeight: '32px',
-                                    fontSize: '7.5pt',
+                                    fontSize: '8.5pt',
                                 }}
                             >
-                                {nomeVisitante || '—'}
+                                <strong style={{ whiteSpace: 'nowrap' }}>VISITANTE:</strong>
+                                &nbsp;{nomeVisitante || '—'}
                             </td>
                             <td style={{ ...ts.th, padding: '4px 6px', whiteSpace: 'nowrap' }}>PARENTESCO:</td>
                             <td
