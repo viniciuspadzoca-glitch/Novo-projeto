@@ -647,9 +647,9 @@ function SecaoBasePpl() {
                         Nenhum PPL na base. Importe um arquivo CSV para começar.
                     </p>
                 ) : (
-                    <div className="overflow-x-auto">
+                    <div className="overflow-auto" style={{ maxHeight: '60vh' }}>
                         <table className="w-full text-sm">
-                            <thead className="bg-secondary text-left text-[11px] uppercase tracking-widest text-secondary-foreground">
+                            <thead className="sticky top-0 z-10 bg-secondary text-left text-[11px] uppercase tracking-widest text-secondary-foreground">
                                 <tr>
                                     <th className="px-3 py-2">Prontuário</th>
                                     <th className="px-3 py-2">Nome</th>
