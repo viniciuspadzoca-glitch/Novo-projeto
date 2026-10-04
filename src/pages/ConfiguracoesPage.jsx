@@ -342,6 +342,9 @@ function SecaoBasePpl() {
 
     useEffect(() => {
         recarregar();
+        const onSync = () => recarregar();
+        window.addEventListener('firebase-pplbase-sync', onSync);
+        return () => window.removeEventListener('firebase-pplbase-sync', onSync);
     }, [recarregar]);
 
     const solicitarImportacao = (file) => {

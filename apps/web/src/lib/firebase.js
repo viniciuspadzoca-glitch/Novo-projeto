@@ -215,15 +215,23 @@ export async function sincronizarPplBaseFirebase(rows) {
     await set(ref(rtdb, 'ppl_base'), payload);
 }
 
+let ultimoSyncPplBase = 0;
+
 /**
- * Mescla a base remota no local. Só substitui o local se o remoto tiver dados
- * e o local estiver vazio (evita apagar uma base recém-importada neste dispositivo).
+ * Mescla a base remota no local. Compara o syncAt remoto com o último
+ * aplicado neste dispositivo — se o remoto for mais recente, substitui
+ * integralmente a base local e emite um evento global para a UI recarregar.
  */
 export async function mesclarPplBaseRemoto(remoto) {
-    const totalLocal = await db.PPL_Base.count();
-    if (totalLocal > 0) return; // este dispositivo já tem base; não sobrescreve
-    const entradas = Object.entries(remoto || {});
+    if (!remoto) return;
+    const entradas = Object.entries(remoto);
     if (entradas.length === 0) return;
+
+    const syncAtRemoto = Math.max(
+        ...entradas.map(([, v]) => v.syncAt || 0),
+    );
+    if (syncAtRemoto <= ultimoSyncPplBase) return; // já aplicamos esta versão
+
     const rows = entradas.map(([, v]) => {
         const { syncAt, ...resto } = v;
         return resto;
@@ -232,6 +240,11 @@ export async function mesclarPplBaseRemoto(remoto) {
         await db.PPL_Base.clear();
         await db.PPL_Base.bulkAdd(rows);
     });
+    ultimoSyncPplBase = syncAtRemoto;
+
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('firebase-pplbase-sync'));
+    }
 }
 
 // ─── Bloqueios disciplinares (PPL_Bloqueios) ───────────────────────────────

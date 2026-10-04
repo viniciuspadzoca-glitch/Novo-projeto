@@ -10,7 +10,10 @@ export default function BuscaPpl({ onSelecionar, autoFocus = false }) {
     const boxRef = useRef(null);
 
     useEffect(() => {
-        getPplUnicosDaBase().then(setPpls);
+        const carregar = () => getPplUnicosDaBase().then(setPpls);
+        carregar();
+        window.addEventListener('firebase-pplbase-sync', carregar);
+        return () => window.removeEventListener('firebase-pplbase-sync', carregar);
     }, []);
 
     useEffect(() => {
