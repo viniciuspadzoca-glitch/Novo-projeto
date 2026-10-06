@@ -383,6 +383,68 @@ export async function backfillSettingsLocal() {
     await salvarSettingsFirebase().catch((e) => console.warn('Backfill settings Firebase:', e));
 }
 
+// ─── Limpeza automática de registros antigos (4 meses) ──────────────────────
+// O Firebase armazena registros em pastas por data: registros/{YYYY-MM-DD}/{key}.
+// Esta função remove pastas com mais de `IDADE_MAX_MESES` meses do Firebase,
+// mantendo os registros locais no IndexedDB de cada máquina. Roda no máximo
+// uma vez por dia (flag em localStorage).
+const IDADE_MAX_MESES = 4;
+const LIMPEZA_FLAG_KEY = '__ultimaLimpezaRegistros';
+
+/** Remove do Firebase todos os registros com mais de N meses. */
+export async function limparRegistrosAntigos() {
+    const agora = new Date();
+    const limite = new Date(agora.getFullYear(), agora.getMonth() - IDADE_MAX_MESES, agora.getDate());
+    const limiteISO = `${limite.getFullYear()}-${String(limite.getMonth() + 1).padStart(2, '0')}-${String(limite.getDate()).padStart(2, '0')}`;
+
+    // 1. Lista todas as pastas de data no Firebase
+    let datasParaRemover = [];
+    try {
+        const snap = await get(ref(rtdb, 'registros'));
+        const val = snap.val() || {};
+        datasParaRemover = Object.keys(val).filter((dataISO) => dataISO < limiteISO);
+    } catch (e) {
+        console.warn('Limpeza: falha ao listar pastas do Firebase:', e?.message || e);
+    }
+
+    // 2. Remove cada pasta antiga do Firebase
+    for (const dataISO of datasParaRemover) {
+        try {
+            await remove(ref(rtdb, `registros/${dataISO}`));
+        } catch (e) {
+            console.warn(`Limpeza: falha ao remover ${dataISO} do Firebase:`, e?.message || e);
+        }
+    }
+
+    // 3. Marca que a limpeza rodou hoje
+    try {
+        localStorage.setItem(LIMPEZA_FLAG_KEY, dataHojeISO());
+    } catch {
+        // localStorage indisponível — não é crítico
+    }
+
+    const total = datasParaRemover.length;
+    if (total > 0) {
+        console.info(`Limpeza automática: ${total} pasta(s) de registros com mais de ${IDADE_MAX_MESES} meses removidas do Firebase (anteriores a ${limiteISO}).`);
+    }
+}
+
+/** Verifica se a limpeza diária já rodou hoje; se não, dispara em background. */
+export function verificarLimpezaAutomatica() {
+    try {
+        const ultima = localStorage.getItem(LIMPEZA_FLAG_KEY);
+        const hoje = dataHojeISO();
+        if (ultima === hoje) return; // já rodou hoje
+        limparRegistrosAntigos().catch((e) =>
+            console.warn('Limpeza automática falhou:', e?.message || e),
+        );
+    } catch {
+        limparRegistrosAntigos().catch((e) =>
+            console.warn('Limpeza automática falhou:', e?.message || e),
+        );
+    }
+}
+
 // ─── Inicialização global (chamar uma vez no App) ──────────────────────────
 let inicializado = false;
 
@@ -391,6 +453,7 @@ let inicializado = false;
  *  1. Envia registros locais sem fbKey para o Firebase (backfill offline).
  *  2. Abre ouvinte onValue() em /registros/{DATA_ATUAL} e /ppl_base.
  *  3. Mescla mudanças remotas no IndexedDB — a UI reativa se atualiza sozinha.
+ *  4. Roda limpeza automática de registros com mais de 4 meses (1x/dia).
  * Retorna função de cancelamento.
  */
 export function inicializarSincronizacao() {
@@ -402,6 +465,9 @@ export function inicializarSincronizacao() {
 
     // Backfill de configurações: publica as locais se o Firebase ainda não tem /settings
     backfillSettingsLocal().catch((e) => console.warn('Backfill settings inicial:', e));
+
+    // Limpeza automática de registros antigos (mais de 4 meses) — 1x por dia
+    verificarLimpezaAutomatica();
 
     // Ouvinte de registros de entrega — apenas a pasta da data atual,
     // evitando carregar todo o histórico e travar o painel em tempo real.
